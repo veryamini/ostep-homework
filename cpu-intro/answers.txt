@@ -1,0 +1,17 @@
+Homework Solution
+
+1. The CPU utilization will be 100% (10 units, 1 unit being time taken to finish one instruction) as x:Y is the (number of instructions:% usage of CPU). CPU usage percentage is specified as 100 for all instructions.
+
+2. 6 units of CPU (1 unit being time taken to finish one instruction), as the second process with 1:0 (1 instruction with only IO) will use the CPU to start the process (1 unit), then go into waiting to finish IO,
+then be marked as done (1 unit). The other process (4:100) will use the CPU for 4 units time. Total time is 6 units (CPU) + 4 units (IO) = 10 units
+
+3. Yes, changing the order matters as now since the IO process will be executed first, the IO can happen parallelly with process 2 using the cpu, thus reducing total time to 6 units.
+
+4. This will work similar to question 2. As we need to wait for P1 to finish IO befire the CPU can be used by P2, it will take a total of 9 units (no time for wait to become active and marked as done) of time to finish both processes.
+
+5. Same as Q3. The CPU will be switched to P2 as sson as P1 goes on wait.
+
+6. First instruction of IO for process 1 (P1) will run and go to wait for IO, then P2, P3, P4 will run and then P1 will be loaded to CPU again to run rest of the instructions and go to wait and run again. No the system resources are not being utilized effectively.
+We could have loaded P1 between other process calls so that the IO can happen in the background.
+
+7. This way is better as this utilises the CPU effectively, reducing the wait time at the end for running P1 only. This can effectively run the IO in the background by running each operation for P1 on the CPU.

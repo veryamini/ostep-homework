@@ -1,0 +1,7 @@
+Random numbers sequences are created using the seed value that we provide to it. In python, the seed value is used to start the random sequence.
+The next time a random function is called, the same sequence is used to generate random numbers.
+A computer uses a mathematical function (a for loop that it runs for a specific time or a polynomial function) and uses the seed value to start the sequence or change the output from the function in some way. 
+
+1. Whenever we provide a different seed, we get a different process tree as the random seed changes the starting point of the sequence, thus changing the random number sequence.
+
+2. 

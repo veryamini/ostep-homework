@@ -1,0 +1,101 @@
+1. Running three jobs with runtime 200s each using SJF scheduler should give the following:
+  Execution trace:
+   [time   0] Run job 0 for 200.00 secs (DONE)
+   [time   200] Run job 1 for 200.00 secs (DONE)
+   [time   400] Run job 2 for 200.00 secs (DONE)
+
+  Final statistics:
+   Job   0 -- Response: 0.00  Turnaround 200.00  Wait 0.00
+   Job   1 -- Response: 200.00  Turnaround 400.00  Wait 200.00
+   Job   2 -- Response: 400.00  Turnaround 600.00  Wait 400.00
+
+   Average -- Response: 200.00  Turnaround 400.00  Wait 200.00
+
+  Using FIFO scheduler:
+  Execution trace:
+    [time   0] Run job 0 for 200.00 secs (DONE)
+    [time   200] Run job 1 for 200.00 secs (DONE)
+    [time   400] Run job 2 for 200.00 secs (DONE)
+
+  Final statistics:
+    Job   0 -- Response: 0.00  Turnaround 200.00  Wait 0.00
+    Job   1 -- Response: 200.00  Turnaround 400.00  Wait 200.00
+    Job   2 -- Response: 400.00  Turnaround 600.00  Wait 400.00
+
+  Average -- Response: 200.00  Turnaround 400.00  Wait 200.00
+
+Both SJF and FIFO give same results as all jobs are of same length.
+
+2. For jobs in order of 100, 200, 300, the answers for SJF and FIFO would be same if theses arrive together.
+  Execution trace:
+    [time   0] Run job 0 for 100.00 secs (DONE)
+    [time   100] Run job 1 for 200.00 secs (DONE)
+    [time   300] Run job 2 for 300.00 secs (DONE)
+
+  Final statistics:
+    Job   0 -- Response: 0.00  Turnaround 100.00  Wait 0.00
+    Job   1 -- Response: 100.00  Turnaround 300.00  Wait 100.00
+    Job   2 -- Response: 300.00  Turnaround 600.00  Wait 300.00
+
+  Average -- Response: 133.33  Turnaround 333.33  Wait 133.33
+
+But if the jobs started as 200,100,300, the responses would be different:
+For SJF:
+  Execution trace:
+    [time   0] Run job 0 for 100.00 secs (DONE)
+    [time   100] Run job 1 for 200.00 secs (DONE)
+    [time   300] Run job 2 for 300.00 secs (DONE)
+
+  Final statistics:
+    Job   0 -- Response: 0.00  Turnaround 100.00  Wait 0.00
+    Job   1 -- Response: 100.00  Turnaround 300.00  Wait 100.00
+    Job   2 -- Response: 300.00  Turnaround 600.00  Wait 300.00
+
+  Average -- Response: 133.33  Turnaround 333.33  Wait 133.33
+
+For FIFO:
+  Execution trace:
+    [time   0] Run job 0 for 200.00 secs (DONE)
+    [time   200] Run job 1 for 100.00 secs (DONE)
+    [time   300] Run job 2 for 300.00 secs (DONE)
+
+  Final statistics:
+    Job   0 -- Response: 0.00  Turnaround 200.00  Wait 0.00
+    Job   1 -- Response: 200.00  Turnaround 300.00  Wait 200.00
+    Job   2 -- Response: 300.00  Turnaround 600.00  Wait 300.00
+
+  Average -- Response: 166.67  Turnaround 366.67  Wait 166.67
+
+3. For RR with 1s as time-slice, the output would be similar:
+  Execution trace:
+    [time   0] Run job 0 for 1.00 secs (READY)
+    [time   1] Run job 1 for 1.00 secs (READY)
+    [time   2] Run job 2 for 1.00 secs (READY)
+    .
+    .
+    .
+    [time 297] Run job 0 for 1.00 secs (DONE)
+    [time 298] Run job 1 for 1.00 secs (READY)
+    [time 299] Run job 2 for 1.00 secs (READY)
+    .
+    .
+    [time 498] Run job 1 for 1.00 secs (DONE)
+    .
+    .
+    [time 599] Run job 2 for 1.00 secs (READY)
+
+  Final statistics:
+    Job   0 -- Response: 0.00  Turnaround 298.00  Wait 198.00
+    Job   1 -- Response: 1.00  Turnaround 499.00  Wait 299.00
+    Job   2 -- Response: 2.00  Turnaround 600.00  Wait 300.00
+
+  Average -- Response: 1.00  Turnaround 465.67  Wait 265.67
+
+4. SJF and FIFO have the same turnaround when all the incoming processes have run time in ascending order.
+
+5. SJF and RR will have same response times if the n-1 jobs have same running time as quatum length
+
+6. The response time also increases if the running time also increases with SJF.
+
+7. The response time is equal to quntum length, so as quantum length increases, response time also increases for RR.
+Assuming quantum length is much higher than the context switch time.
